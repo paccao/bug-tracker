@@ -2,7 +2,7 @@ import express from "express"
 import helmet from "helmet"
 import "dotenv/config"
 
-import * as ops from "./routerOperations"
+import * as ops from "./routerOperations.js"
 
 const app = express()
 const PORT = process.env.PORT || 5000
@@ -23,5 +23,5 @@ app.get("/users", (req, res) => {
 })
 
 app.post("/users", (req, res) => {
-  ops.postUsers(req, res)
+  ops.createUser(req, res)
 })

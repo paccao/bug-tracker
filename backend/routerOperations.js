@@ -1,6 +1,7 @@
 import { setDB } from "./dbConnection.js"
 const db = setDB("bug_tracker")
 
+/** Home page */
 export function root(req, res) {
   try {
     return res.json({ success: true, message: "Express API" })
@@ -9,6 +10,7 @@ export function root(req, res) {
   }
 }
 
+/** Gets all users currently in the database*/
 export async function getAllUsers(req, res) {
   try {
     const sql = "SELECT * FROM users"
@@ -21,7 +23,8 @@ export async function getAllUsers(req, res) {
   }
 }
 
-export async function postUsers(req, res) {
+/** takes a username and password in the request and creates a new user in the database*/
+export async function createUser(req, res) {
   try {
     const { username, password } = req.body
     const sql =
