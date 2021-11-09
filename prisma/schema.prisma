@@ -11,23 +11,48 @@ datasource db {
 }
 
 model User {
-  user_id    Int      @id @default(autoincrement())
-  user_name  String
-  password   String
-  avatar     String
-  created_at DateTime @default(now())
-  boards     Board[]
+  id          Int              @id @default(autoincrement())
+  user_name   String           @unique
+  password    String
+  email       String           @unique
+  avatar      String           @default("https://loremflickr.com/512/512")
+  created_at  DateTime         @default(now())
+  updated_at  DateTime         @default(now())
+  boards      Board[]
+  assigned_at Assigned_users[]
 }
 
 model Board {
-  board_id Int     @id @default(autoincrement())
-  user     User?   @relation(fields: [user_id], references: [user_id])
-  user_id  Int?
-  tables   Table[]
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String
+  user        User?   @relation(fields: [user_id], references: [id])
+  user_id     Int?
+  tables      Table[]
 }
 
 model Table {
-  table_id Int    @id @default(autoincrement())
-  board    Board? @relation(fields: [board_id], references: [board_id])
-  board_id Int?
+  id          Int    @id @default(autoincrement())
+  title       String
+  description String
+  board       Board? @relation(fields: [board_id], references: [id])
+  board_id    Int?
+  cards       Card[]
+}
+
+model Card {
+  id             Int              @id @default(autoincrement())
+  title          String
+  description    String
+  table          Table?           @relation(fields: [table_id], references: [id])
+  table_id       Int?
+  assigned_users Assigned_users[]
+}
+
+model Assigned_users {
+  id      Int   @id @default(autoincrement())
+  card    Card? @relation(fields: [card_id], references: [id])
+  card_id Int?
+  user    User? @relation(fields: [user_id], references: [id])
+  user_id Int?
 }
