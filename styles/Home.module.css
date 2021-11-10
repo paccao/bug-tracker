@@ -1,5 +1,6 @@
 .container {
 	padding: 0 2rem;
+	background-color: coral;
 }
 
 .main {
@@ -29,7 +30,7 @@
 }
 
 .title a {
-	color: #0070f3;
+	color: #b92929;
 	text-decoration: none;
 }
 
@@ -88,8 +89,8 @@
 .card:hover,
 .card:focus,
 .card:active {
-	color: #0070f3;
-	border-color: #0070f3;
+	color: coral;
+	border-color: coral;
 }
 
 .card h2 {
