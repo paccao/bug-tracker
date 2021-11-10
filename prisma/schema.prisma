@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id          Int              @id @default(autoincrement())
+  user_name   String           @unique
+  password    String
+  email       String           @unique
+  avatar      String           @default("https://loremflickr.com/512/512")
+  created_at  DateTime         @default(now())
+  updated_at  DateTime         @default(now())
+  boards      Board[]
+  assigned_at Assigned_users[]
+}
+
+model Board {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String? @default("")
+  user        User?   @relation(fields: [user_id], references: [id])
+  user_id     Int?
+  is_archived Boolean @default(false)
+  tables      Table[]
+}
+
+model Table {
+  id          Int      @id @default(autoincrement())
+  title       String
+  description String?  @default("")
+  board       Board?   @relation(fields: [board_id], references: [id])
+  board_id    Int?
+  is_archived Boolean  @default(false)
+  columns     Column[]
+}
+
+model Column {
+  id          Int     @id @default(autoincrement())
+  title       String
+  description String? @default("")
+  table       Table?  @relation(fields: [table_id], references: [id])
+  table_id    Int?
+  is_archived Boolean @default(false)
+  cards       Card[]
+}
+
+model Card {
+  id             Int              @id @default(autoincrement())
+  title          String
+  description    String?          @default("")
+  columns        Column?          @relation(fields: [column_id], references: [id])
+  column_id      Int?
+  is_archived    Boolean          @default(false)
+  assigned_users Assigned_users[]
+}
+
+model Assigned_users {
+  id      Int   @id @default(autoincrement())
+  card    Card? @relation(fields: [card_id], references: [id])
+  card_id Int?
+  user    User? @relation(fields: [user_id], references: [id])
+  user_id Int?
+}
