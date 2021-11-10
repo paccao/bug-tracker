@@ -1,6 +1,6 @@
 .container {
 	padding: 0 2rem;
-	background-color: coral;
+	background-color: #4c6b56;
 }
 
 .main {
@@ -30,7 +30,7 @@
 }
 
 .title a {
-	color: #b92929;
+	color: coral;
 	text-decoration: none;
 }
 
