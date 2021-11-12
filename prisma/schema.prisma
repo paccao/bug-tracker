@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-  id          Int              @id @default(autoincrement())
+  id          String           @id @default(cuid())
   user_name   String           @unique
   password    String
   email       String           @unique
@@ -27,7 +27,7 @@ model Board {
   title       String
   description String? @default("")
   user        User?   @relation(fields: [user_id], references: [id])
-  user_id     Int?
+  user_id     String?
   is_archived Boolean @default(false)
   tables      Table[]
 }
@@ -63,9 +63,9 @@ model Card {
 }
 
 model Assigned_users {
-  id      Int   @id @default(autoincrement())
-  card    Card? @relation(fields: [card_id], references: [id])
+  id      Int     @id @default(autoincrement())
+  card    Card?   @relation(fields: [card_id], references: [id])
   card_id Int?
-  user    User? @relation(fields: [user_id], references: [id])
-  user_id Int?
+  user    User?   @relation(fields: [user_id], references: [id])
+  user_id String?
 }

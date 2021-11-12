@@ -7,15 +7,15 @@ import { PrismaClient } from "@prisma/client"
  */
 let prisma: PrismaClient
 
-// Prevent exhaustion of connection to db
+// Prevent exhaustion of connection to db since next creates a new prisma client on each save.
 if (process.env.NODE_ENV === "production") {
 	prisma = new PrismaClient()
 } else {
-	// Only instatiate PrismaClient on the global object in nodejs when it's not there
+	// Only instatiate PrismaClient on the global object in nodejs when it's not there.
 	if (!global.prisma) {
 		global.prisma = new PrismaClient()
 	}
-	// Otherwise set prisma to the preexisting one
+	// Set prisma to the global prisma instance.
 	prisma = global.prisma
 }
 
