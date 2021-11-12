@@ -5,15 +5,13 @@ import { PrismaClient } from "@prisma/client"
  * to prevent exhausting the database connection limit
  * https://www.prisma.io/docs/support/help-articles/nextjs-prisma-client-dev-practices
  */
-// Initialize prisma on the global object
 let prisma: PrismaClient
 
-// Create instance of prisma in the production
-// to prevent exhaustion of connection to db
+// Prevent exhaustion of connection to db
 if (process.env.NODE_ENV === "production") {
 	prisma = new PrismaClient()
 } else {
-	// Only instatiate PrismaClient when it's not on the global object
+	// Only instatiate PrismaClient on the global object in nodejs when it's not there
 	if (!global.prisma) {
 		global.prisma = new PrismaClient()
 	}
