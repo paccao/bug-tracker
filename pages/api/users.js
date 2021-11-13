@@ -1,4 +1,5 @@
 import prisma from "../../lib/prisma"
+import { hashPass } from "../../utils/auth"
 
 export default async function handler(req, res) {
 	try {
@@ -9,9 +10,12 @@ export default async function handler(req, res) {
 				res.status(200).json({ success: true, users })
 				break
 			case "POST":
-				req.body.password
+				const hashedPass = await hashPass(req.body.password)
 				const createdUser = await prisma.user.create({
-					data: req.body,
+					data: {
+						...req.body,
+						password: hashedPass,
+					},
 				})
 				res.status(200).json({
 					success: true,
