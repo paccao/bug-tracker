@@ -24,7 +24,7 @@ export default async function handler(req, res) {
 				})
 				break
 			default:
-				res.status(200).json({
+				res.status(404).json({
 					success: false,
 					message: "Api method not set up yet.",
 				})
