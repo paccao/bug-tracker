@@ -1,4 +1,4 @@
-import prisma from "../../lib/prisma"
+import prisma from "../../../lib/prisma"
 import { createUser } from "../../utils/dbOps"
 
 export default async function handler(req, res) {

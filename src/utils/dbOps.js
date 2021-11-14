@@ -1,6 +1,6 @@
 import Joi from "joi"
-import prisma from "../lib/prisma"
-import { hashPass } from "../utils/auth"
+import prisma from "../../lib/prisma"
+import { hashPass } from "./auth"
 
 const userSchema = Joi.object({
 	user_name: Joi.string().alphanum().min(3).max(30).required(),
