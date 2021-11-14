@@ -1,17 +1,15 @@
 import prisma from "../../lib/prisma"
-import { hashPass } from "../../utils/auth"
 import { createUser } from "../../utils/dbOps"
 
 export default async function handler(req, res) {
 	try {
-		console.log(req.method)
 		switch (req.method) {
 			case "GET":
 				const users = await prisma.user.findMany()
 				res.status(200).json({ success: true, users })
 				break
 			case "POST":
-				const createdUser = createUser()
+				const createdUser = await createUser(req)
 				res.status(200).json({
 					success: true,
 					message: "User created.",
